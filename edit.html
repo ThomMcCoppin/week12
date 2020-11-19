@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>CRUD Editing</title>
+	</head>
+	<body>
+		<h1>Spell Editing</h1>
+		<div id="desiredSpell"></div>
+		
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+		<script>
+			//need the spell array
+			//pick out the Id and then use that to get the chosen spell to edit
+			var spells = JSON.parse(localStorage.getItem('spells')); 
+			var querySpellId = new URLSearchParams(window.location.search);
+			var chosenSpell = spells;
+			var chosenSpellKey;
+			var spellDiv = $("#desiredSpell");
+			var readySpellId;
+			
+			//we have the spell to adjust, we should display it
+			//allow a form to change our chosen spell
+			//save button to sumbit our changes to local storage
+			
+			//this is a bad implementation and I know it, but putting IDs in the spell object is a pain
+			if (querySpellId.get('id') == "0") {
+				spellDiv.append(`${spells.mostFavoriteSpell}`);
+			}
+			else if (querySpellId.get('id') == "1") {
+				spellDiv.append(`${spells.secondFavoriteSpell}`);
+			}
+			else if (querySpellId.get('id') == "2") {
+				spellDiv.append(`${spells.thirdFavoriteSpell}`);
+			}
+
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
