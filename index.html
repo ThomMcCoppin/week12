@@ -16,15 +16,26 @@
 			  <tbody>
 				<tr>
 				  <th scope="row">1</th>
-				  <td><a href="edit.html?id=0"><div  id="favoriteSpell"></div></a></td>
+				  <td>
+					<a href="edit.html?id=0"><div  id="favoriteSpell" style="display:inline; margin-right: 30px;"></div></a> 
+					<button type="delete" class="btn btn-primary" id="delete-FavoriteSpell" onclick="deleteItem(0)">Delete Spell</button>
+				  </td>
+				   
 				</tr>
 				<tr>
 				  <th scope="row">2</th>
-				  <td><a href="edit.html?id=1"><div  id="secondSpell"></div></a></td>
+				  <td>
+				  <a href="edit.html?id=1"><div  id="secondSpell" style="display:inline; margin-right: 30px;"> </div></a>
+				  <button type="delete" class="btn btn-primary" id="delete-SecondSpell" onclick="deleteItem(1)">Delete Spell</button>
+				  </td>
+				  
 				</tr>
 				<tr>
 				  <th scope="row">3</th>
-				  <td><a href="edit.html?id=2"><div  id="thirdSpell"></div></a></td>
+				  <td>
+					<a href="edit.html?id=2"><div  id="thirdSpell" style="display:inline; margin-right: 30px;"></div></a>
+					<button type="delete" class="btn btn-primary" id="delete-ThirdSpell" onclick="deleteItem(2)">Delete Spell</button>
+				  </td>
 				</tr>
 				<tr>
 				  <th scope="row">Click on a spell to edit!</th>
@@ -36,17 +47,65 @@
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 			<script>
 				function displaySpellsOnPage() {
-				//find the spells and parse, then update the page with them
-				var spells = JSON.parse(localStorage.getItem('spells'));
-				
-				$(spells).each(function() {
-					$("#favoriteSpell").append(`${this.mostFavoriteSpell}`);
-					$("#secondSpell").append(`${this.secondFavoriteSpell}`);
-					$("#thirdSpell").append(`${this.thirdFavoriteSpell}`);					
-				});
-			}
+					//find the spells and parse, then update the page with them
+					var spells = JSON.parse(localStorage.getItem('spells'));
+					
+					//checking to see if array is filled in or not
+					
+					$(spells).each(function() {
+					if(spells.mostFavoriteSpell !== null) {
+						$("#favoriteSpell").append(`${this.mostFavoriteSpell}`);
+					}
+					else {
+						$("#delete-FavoriteSpell").hide();
+					}
+					if(spells.secondFavoriteSpell !== null) {
+						$("#secondSpell").append(`${this.secondFavoriteSpell}`);
+					}
+					else {
+						$("#delete-secondSpell").hide();
+					}
+					if(!!spells.thirdFavoriteSpell) {
+						$("#thirdSpell").append(`${this.thirdFavoriteSpell}`);	
+					}
+					else {
+						$("#delete-ThirdSpell").hide();
+					}
+					});
+				}
 			
-			displaySpellsOnPage();
+				displaySpellsOnPage();
+				
+				
+				function deleteItem (index) {
+					var spellArray = JSON.parse(localStorage.getItem('spells'));
+					
+					console.log(JSON.parse(localStorage.getItem('spells')));
+					
+					//this is so unbelievably awful but im too deep into doing it the bad way to turn around now
+					
+					if(index == "0") {
+						delete spellArray[0].mostFavoriteSpell;
+					}
+					else if(index == "1") {
+						delete spellArray[0].secondFavoriteSpell;
+					}
+					else if (index == "2") {
+						delete spellArray[0].thirdFavoriteSpell;
+					}
+					
+					console.log(spellArray[0]);
+					
+					localStorage.setItem('spells', JSON.stringify(spellArray));
+					
+					displaySpellsOnPage();
+				}
+				
+				
+				//I know that in the end this will work but this could've been
+				//so much easier if I had just realized that it was pushing a whole
+				//object into localStorage rather than the 3 unique spells as an array.
+				//that one mistake made me commit literal mortal sins in order to make this work.
 			</script>
 		<div>
 	</body>
